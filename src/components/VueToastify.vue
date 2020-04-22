@@ -11,8 +11,15 @@
                 backgroundColor: settings.backdrop
             }"
         ></div>
+
+        <!--
+justify-center   for top-right
+
+       -->
+
+        <!--  sm:p-6 sm:items-start sm:justify-end  -->
         <vt-transition
-            class="vt-notification-container"
+              class="fixed inset-0 flex items-end  justify-end px-4 py-6 pointer-events-none "
             :class="positionClasses"
             :style="flexDirection"
             :transition="getTransition"
@@ -670,5 +677,6 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
 }
-@import "../assets/toast";
+//@import "../assets/toast";
+@import "../assets/lensguild";
 </style>

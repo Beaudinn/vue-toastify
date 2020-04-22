@@ -1,0 +1,84 @@
+// This is all the styles the toast component uses.
+// You may change any of the default values
+// by appending the value with !important.
+//
+// To get the plain CSS rules just plug
+// it into an online converter
+
+.vt-notification {
+
+  transition: transform 100ms ease; // This ensures that on drag the notification slides back to its original position
+  // box-sizing: border-box;
+  // pointer-events: auto;
+  // box-shadow: 0 0 10px 0.5px rgba(0, 0, 0, 0.35);
+  // padding: 10px 20px;
+  // min-height: 100px;
+  // min-width: 250px;
+  // border-radius: 5px;
+  // margin-bottom: 10px;
+  // margin-left: auto;
+  // margin-right: auto;
+   z-index: 9999;
+  // display: flex;
+  // justify-content: space-around;
+  // align-items: center;
+  // flex-flow: wrap row;
+  // align-content: center;
+}
+
+.vt-right-enter-active,
+.vt-left-enter-active,
+.vt-bottom-enter-active,
+.vt-top-enter-active,
+.vt-center-enter-active {
+  transition: all 0.2s ease-out;
+}
+
+.vt-right-leave-active,
+.vt-left-leave-active,
+.vt-bottom-leave-active,
+.vt-top-leave-active,
+.vt-center-leave-active {
+  transition: all 0.2s ease-in;
+}
+
+.vt-right-enter,
+.vt-right-leave-to {
+  transform: translateX(50px);
+  opacity: 0;
+}
+
+.vt-left-enter,
+.vt-left-leave-to {
+  transform: translateX(-50px);
+  opacity: 0;
+}
+
+.vt-bottom-enter,
+.vt-bottom-leave-to {
+  transform: translateY(50px);
+  opacity: 0;
+}
+
+.vt-top-enter,
+.vt-top-leave-to {
+  transform: translateY(-50px);
+  opacity: 0;
+}
+
+.vt-center-enter,
+.vt-center-leave-to {
+  opacity: 0;
+}
+
+
+.spinner {
+  display: inline-block;
+  animation:rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+  100% {
+    -webkit-transform: rotate(360deg); transform:rotate(360deg);
+  }
+}

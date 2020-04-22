@@ -227,8 +227,20 @@
                                 <option
                                     value=""
                                     class="text-gray-800 font-hairline"
-                                    >Leave empty</option
+                                    >Leave empty (simple)</option
                                 >
+                                <option
+                                    value="condensed"
+                                    class="text-gray-800 font-hairline"
+                                    >Condensed</option
+                                >
+
+                                <option
+                                    value="split-prompt"
+                                    class="text-gray-800 font-hairline"
+                                    >Split Prompt</option
+                                >
+
                                 <option
                                     value="prompt"
                                     class="text-gray-800 font-hairline"
@@ -415,13 +427,7 @@
             <div
                 class="flex justify-around items-center align-middle flex-wrap my-4"
             >
-                <iframe
-                    src="https://ghbtns.com/github-btn.html?user=nandi95&repo=vue-toastify&type=star&count=true&size=large"
-                    frameborder="0"
-                    scrolling="0"
-                    width="180px"
-                    height="30px"
-                ></iframe>
+
                 <button
                     v-if="status.mode === 'loader'"
                     @click="loadStop"
@@ -565,7 +571,12 @@ export default {
             this.$vToastify.setSettings({ withBackdrop: newValue });
         },
         lightTheme: function(newValue) {
-            this.$vToastify.setSettings({ theme: newValue ? "light" : "dark" });
+          if (newValue) {
+               document.documentElement.classList.add('mode-dark');
+           } else {
+               document.documentElement.classList.remove('mode-dark');
+           }
+            //this.$vToastify.setSettings({ theme: newValue ? "light" : "dark" });
         },
         defaultTitle: function(newValue) {
             this.$vToastify.setSettings({ defaultTitle: newValue });
