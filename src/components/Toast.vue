@@ -41,9 +41,7 @@
               :base-icon-class="baseIconClass"
           />
           <div class="w-0 flex-1 flex justify-between" v-if="status.mode === 'condensed'" >
-            <p class="w-0 flex-1 text-sm leading-5 font-medium text-gray-900">
-                  Discussion archived
-            </p>
+            <p class="w-0 flex-1 text-sm leading-5 font-medium text-gray-900" v-html="status.body"></p>
             <button v-for="(value, answerProperty, index) in status.answers"
             :key="index"
             @click="respond(value)"

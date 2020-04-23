@@ -137,9 +137,9 @@ export default {
             }
         );
         // if there is a notification assigned to the window
+        //window.notification.type &&
         if (
             window.notification &&
-            window.notification.type &&
             window.notification.body
         ) {
             const delay = window.notification.delay
@@ -327,7 +327,7 @@ export default {
             // copy object
             let toast = Object.assign({}, status); //todo update to deep copy
             // if object doesn't have default values, set them
-            toast.duration = this.settings.warningInfoDuration;
+            //toast.duration = this.settings.warningInfoDuration;
             if (Number(status.duration) > 0) {
                 toast.duration = Number(status.duration);
             } else if (status.type) {
