@@ -24,6 +24,19 @@
   // align-items: center;
   // flex-flow: wrap row;
   // align-content: center;
+
+}
+
+.vt-progress-bar {
+  height: 3px;
+  width: 100%;
+  margin-bottom: 5px;
+  & > .vt-progress {
+    max-width: 100%;
+    height: 3px;
+    overflow: hidden;
+    transition: max-width 1ms ease-in-out;
+  }
 }
 
 .vt-right-enter-active,

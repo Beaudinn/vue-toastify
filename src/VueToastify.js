@@ -100,7 +100,7 @@ const VueToastify = {
                 if (title) {
                     status.title = title;
                 }
-                status.mode = "prompt";
+                //status.mode = "prompt";
                 const id = ToastContainer.add(status);
                 return new Promise(resolve => {
                     ToastContainer.$root.$once("vtPromptResponse", payload => {

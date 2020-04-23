@@ -1,26 +1,20 @@
 <template>
-    <div>
-        <div class="bg-white">
-          <div class="max-w-screen-xl mx-auto text-center py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-            <h2 class="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
-              Ready to dive in?
-              <br />
-              Start your free trial today.
-            </h2>
-            <div class="mt-8 flex justify-center">
-              <div class="inline-flex rounded-md shadow">
-                <a href="#" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
-                  Get started
-                </a>
-              </div>
-              <div class="ml-3 inline-flex">
-                <a href="#" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-indigo-700 bg-indigo-100 hover:text-indigo-600 hover:bg-indigo-50 focus:outline-none focus:shadow-outline focus:border-indigo-300 transition duration-150 ease-in-out">
-                  Learn more
-                </a>
-              </div>
-            </div>
-          </div>
+  <div class="max-w-7xl my-20 mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
+  <div class="max-w-3xl mx-auto">
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="lg:text-center">
+        <p class="text-base leading-6 text-indigo-600 font-semibold tracking-wide uppercase">By Beaudinn Greve</p>
+        <h3 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
+          Vue Tailwindui Toastify
+        </h3>
+        <p class="mt-4 max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto">
+          A fuss free notification component.
+        </p>
       </div>
+    </div>
+  </div>
+
 
         <main class="px-2 mt-10">
             <div
@@ -184,7 +178,8 @@
                                 id="type"
                                 :disabled="
                                     status.mode === 'loader' ||
-                                        status.mode === 'prompt'
+                                        status.mode === 'prompt' ||
+                                        status.mode === 'split-prompt'
                                 "
                             >
                                 <option
@@ -255,7 +250,7 @@
                         </div>
                         <div
                             class="flex justify-between align-middle items-center mb-5"
-                            v-if="status.mode === 'prompt'"
+                            v-if="status.mode === 'prompt' || status.mode === 'condensed' || status.mode === 'split-prompt'"
                         >
                             <label for="type">Answers:</label>
                             <textarea
@@ -265,6 +260,19 @@
                                 placeholder="eg.: {Yes: true, No: false}"
                             >
                             </textarea>
+                        </div>
+                        <div
+                            class="flex justify-between align-middle items-center mb-5"
+                            v-if="status.mode === 'prompt' || status.mode === 'condensed' || status.mode === 'split-prompt'"
+                        >
+                            <label for="image">Image:</label>
+                            <input
+                                type="text"
+                                id="url"
+                                class="input w-3/4 sm:w-2/3 md:w-4/5"
+                                v-model="status.image"
+                                placeholder="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
+                            />
                         </div>
                         <div
                             class="flex justify-between align-middle items-center mb-5"
@@ -374,6 +382,31 @@
                                 ></label>
                             </div>
                         </div>
+
+                        <div
+                            class="flex justify-between align-middle items-center my-1"
+                        >
+                            <p>On Position:</p>
+                            <div>
+                              <select
+                                  class="input text-center"
+                                  v-model="onPosition"
+                                  id="type"
+                              >
+                              <option value="top-left" class="text-gray-800 font-hairline">top-left</option>
+                              <option value="top-center" class="text-gray-800 font-hairline">top-center</option>
+                              <option value="top-right" class="text-gray-800 font-hairline">top-right</option>
+                              <option value="center-left" class="text-gray-800 font-hairline">center-left</option>
+                              <option value="center-center" class="text-gray-800 font-hairline">center-center</option>
+                              <option value="center-right" class="text-gray-800 font-hairline">center-right</option>
+                              <option value="bottom-left" class="text-gray-800 font-hairline">bottom-left</option>
+                              <option value="bottom-center" class="text-gray-800 font-hairline">bottom-center</option>
+                              <option value="bottom-right" class="text-gray-800 font-hairline">bottom-right</option>
+                              </select>
+                            </div>
+                        </div>
+
+
                         <div
                             class="flex justify-between align-middle items-center my-1"
                         >
@@ -477,11 +510,13 @@ export default {
                 icon: null,
                 mode: "",
                 answers: null,
-                url: ""
+                image: "",
+                url: "",
             },
             lightTheme: false,
             defaultTitle: true,
             withBackdrop: false,
+            onPosition: 'bottom-right',
             singular: false,
             body: null,
             showWarning: false,
@@ -494,7 +529,7 @@ export default {
     methods: {
         addToastify() {
             if (this.status.body.length > 0) {
-                if (this.status.mode === "prompt") {
+                if (this.status.mode === "prompt" || this.status.mode === "condensed" || this.status.mode === "split-prompt") {
                     try {
                         const answersString = this.status.answers;
                         this.status.answers = eval("(" + answersString + ")");
@@ -538,7 +573,8 @@ export default {
         disableProps() {
             if (
                 this.status.mode === "prompt" ||
-                this.status.mode === "loader"
+                this.status.mode === "loader" ||
+                this.status.mode === "split-prompt"
             ) {
                 this.status.duration = null;
                 this.status.defaultTitle = false;
@@ -569,6 +605,9 @@ export default {
     watch: {
         withBackdrop: function(newValue) {
             this.$vToastify.setSettings({ withBackdrop: newValue });
+        },
+        onPosition: function(newValue) {
+            this.$vToastify.setSettings({ position: newValue });
         },
         lightTheme: function(newValue) {
           if (newValue) {

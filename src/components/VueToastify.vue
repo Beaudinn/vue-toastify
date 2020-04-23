@@ -341,7 +341,7 @@ export default {
             toast.answers =
                 status.answers && Object.keys(status.answers).length > 0
                     ? status.answers
-                    : { Yes: true, No: false };
+                    : {}; //{ Yes: true, No: false }
             toast.canPause = isBoolean(status.canPause)
                 ? status.canPause
                 : this.settings.canPause;

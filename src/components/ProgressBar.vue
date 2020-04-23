@@ -1,6 +1,6 @@
 <template>
-    <div class="vt-progress-bar" v-show="!hideProgressbar">
-        <div class="vt-progress" :style="{ width: this.progress + '%' }"></div>
+    <div class="vt-progress-bar bg-gray-300" v-show="!hideProgressbar">
+        <div class="vt-progress bg-gray-800" :style="{ width: this.progress + '%' }"></div>
     </div>
 </template>
 

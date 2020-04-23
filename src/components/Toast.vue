@@ -13,8 +13,12 @@
         @touchstart="isHovered = true"
         @touchend="isHovered = false"
     >
-    <div class="rounded-lg shadow-xs overflow-hidden">
-      <div class="p-4">
+
+
+<!--  overflow-hidden -->
+    <div  :class="{'flex' : status.mode === 'split-prompt'}" class="rounded-lg shadow-xs">
+
+      <div :class="{'w-0 flex-1' : status.mode === 'split-prompt'}" class=" p-4">
         <ProgressBar
             v-if="isNotification && status.canTimeout"
             :can-pause="status.canPause"
@@ -26,14 +30,27 @@
             @vtFinished="closeNotification"
         />
         <div class="flex items-start">
+          <div class="flex-shrink-0 pt-0.5" v-if="status.mode !== 'condensed' && status.image" >
+            <img class="h-10 w-10 rounded-full" :src="status.image" alt="" />
+          </div>
           <Icon
-              v-if="status.iconEnabled"
+              v-if="status.iconEnabled && !status.image"
               :mode="status.mode"
               :type="status.type"
               :icon="status.icon"
               :base-icon-class="baseIconClass"
           />
-          <div class="ml-3 w-0 flex-1 pt-0.5">
+          <div class="w-0 flex-1 flex justify-between" v-if="status.mode === 'condensed'" >
+            <p class="w-0 flex-1 text-sm leading-5 font-medium text-gray-900">
+                  Discussion archived
+            </p>
+            <button v-for="(value, answerProperty, index) in status.answers"
+            :key="index"
+            @click="respond(value)"
+            v-text="answerProperty"
+            class="ml-3 flex-shrink-0 text-sm leading-5 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"/>
+          </div>
+          <div v-else class="ml-3 w-0 flex-1 pt-0.5">
             <p class="text-sm leading-5 font-medium text-gray-900 dark:text-cool-gray-50" v-if="status.title" v-text="status.title">
             </p>
             <p class="mt-1 text-sm leading-5 text-gray-500 dark:text-cool-gray-100" v-html="status.body">
@@ -48,7 +65,7 @@
              </span>
            </div>
           </div>
-          <div v-if="status.mode !== 'loader'" class="ml-4 flex-shrink-0 flex">
+          <div v-if="status.mode !== 'loader' && status.mode !== 'split-prompt'" class="ml-4 flex-shrink-0 flex">
             <button class="inline-flex text-gray-400 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150">
               <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
@@ -57,6 +74,24 @@
           </div>
         </div>
       </div>
+      <div class="flex border-l border-gray-200" v-if="status.mode === 'split-prompt'">
+        <!-- <button v-if="Object.keys(status.answers).length == 1"
+        class="-ml-px flex items-center justify-center w-full border border-transparent rounded-r-lg p-4 text-sm leading-5 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-indigo-700 active:bg-gray-50 transition ease-in-out duration-150">
+          Reply
+        </button> -->
+        <div class="-ml-px flex flex-col">
+          <div v-for="(value, answerProperty, index) in status.answers" :key="index"
+          class="h-0 flex-1 flex border-b border-gray-200"
+          :class="{ 'h-0 flex-1 flex border-b border-gray-200': index == 0, '-mt-px h-0 flex-1 flex': index != 0 }" >
+            <button
+            class="-mb-px flex items-center justify-center w-full rounded-tr-lg border border-transparent px-4 py-3 text-sm leading-5 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-indigo-700 active:bg-gray-50 transition ease-in-out duration-150"
+            @click="respond(value)"
+            v-text="answerProperty"/>
+          </div>
+        </div>
+      </div>
+
+
     </div>
     </component>
 </template>
