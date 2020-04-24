@@ -140,7 +140,7 @@ export default {
             return obj;
         },
         isNotification() {
-            return ["prompt", "loader"].indexOf(this.status.mode) === -1;
+            return ["prompt", "loader", "condensed", "split-prompt"].indexOf(this.status.mode) === -1;
         }
     },
     methods: {

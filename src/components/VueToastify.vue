@@ -19,7 +19,7 @@ justify-center   for top-right
 
         <!--  sm:p-6 sm:items-start sm:justify-end  -->
         <vt-transition
-              class="fixed mt-10 inset-0 flex items-end  justify-end px-4 py-6 pointer-events-none "
+              class="fixed mt-15 inset-0 flex items-end  justify-end px-4 py-6 pointer-events-none "
             :class="positionClasses"
             :style="flexDirection"
             :transition="getTransition"
