@@ -64,7 +64,7 @@
            </div>
           </div>
           <div v-if="status.mode !== 'loader' && status.mode !== 'split-prompt'" class="ml-4 flex-shrink-0 flex">
-            <button @click.stop="closeNotification()" class="inline-flex text-gray-400 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150">
+            <button @click.prevent="closeNotification()" class="inline-flex text-gray-400 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150">
               <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
               </svg>
@@ -140,7 +140,7 @@ export default {
             return obj;
         },
         isNotification() {
-            return ["prompt", "loader", "condensed", "split-prompt"].indexOf(this.status.mode) === -1;
+            return ["prompt", "loader", "split-prompt"].indexOf(this.status.mode) === -1;
         }
     },
     methods: {
@@ -151,6 +151,7 @@ export default {
                     : undefined
             );
 
+            console.log('progress', progress, this.isNotification);
             // if notification manually dismissed before the the timeout or in case if it cannot timeout AND isn't prompt or loader
             if ((isNaN(progress) || progress < 100) && this.isNotification) {
                 this.$root.$emit("vtDismissed", { id: this.status.id,  status: this.status });
