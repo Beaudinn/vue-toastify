@@ -110,6 +110,9 @@ const VueToastify = {
                     });
                 });
             },
+            add(object) {
+                ToastContainer.add(object);
+            },
             stopLoader(id = null) {
                 ToastContainer.stopLoader(id);
             },
